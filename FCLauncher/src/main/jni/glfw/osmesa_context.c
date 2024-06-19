@@ -191,6 +191,11 @@ GLFWbool _glfwInitOSMesa(void)
     if (strcmp(renderer, "Zink") == 0)
         load_vulkan();
 
+    if (strcmp(renderer, "Panfrost") == 0)
+    {
+        setenv("PAN_DEBUG","gofaster", 0);
+    }
+
     if (!_glfw.osmesa.handle)
     {
         _glfwInputError(GLFW_API_UNAVAILABLE, "OSMesa: Library not found");
