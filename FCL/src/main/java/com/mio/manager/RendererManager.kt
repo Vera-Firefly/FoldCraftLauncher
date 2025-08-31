@@ -12,6 +12,7 @@ object RendererManager {
     lateinit var RENDERER_VIRGL: Renderer
     lateinit var RENDERER_VGPU: Renderer
     lateinit var RENDERER_ZINK: Renderer
+    lateinit var RENDERER_ZINK_KOPPER: Renderer
     lateinit var RENDERER_FREEDRENO: Renderer
     lateinit var RENDERER_NGGL4ES: Renderer
     private var isInit = false
@@ -81,6 +82,19 @@ object RendererManager {
             ""
         )
 
+        RENDERER_ZINK_KOPPER = Renderer(
+            "Zink-Kopper",
+            context.getString(R.string.settings_fcl_renderer_zink_kopper),
+            "libglxshim.so",
+            "libEGL_mesa.so",
+            "",
+            null,
+            null,
+            Renderer.ID_ZINK_KOPPER,
+            "",
+            ""
+        )
+
         RENDERER_FREEDRENO = Renderer(
             "Freedreno",
             context.getString(R.string.settings_fcl_renderer_freedreno),
@@ -118,6 +132,7 @@ object RendererManager {
         rendererList.add(RENDERER_VIRGL)
         rendererList.add(RENDERER_VGPU)
         rendererList.add(RENDERER_ZINK)
+        rendererList.add(RENDERER_ZINK_KOPPER)
         rendererList.add(RENDERER_FREEDRENO)
         rendererList.addAll(RendererPlugin.rendererList)
     }

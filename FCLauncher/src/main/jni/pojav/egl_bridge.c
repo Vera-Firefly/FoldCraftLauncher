@@ -107,6 +107,11 @@ int pojavInitOpenGL() {
     const char *renderer = getenv("POJAV_RENDERER");
     if (!strncmp("opengles", renderer, 8))
     {
+        if (!strcmp(renderer, "opengles3_desktopgl_zink_kopper"))
+        {
+            setenv("GALLIUM_DRIVER", "zink", 1);
+            setenv("MESA_ANDROID_NO_KMS_SWRAST", "1", 1);
+        }
         pojav_environ->config_renderer = RENDERER_GL4ES;
         set_gl_bridge_tbl();
     }
