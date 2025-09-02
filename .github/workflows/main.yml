@@ -11,7 +11,6 @@ on:
 
 jobs:
   release_build:
-    if: ${{ github.repository_owner == 'FCL-Team' && github.event_name != 'pull_request' }}
     name: Build for ${{matrix.arch}}
     strategy:
       matrix:
@@ -51,16 +50,7 @@ jobs:
           chmod +x gradlew
           ./gradlew assemblerelease -Darch=${{ matrix.arch }} --no-daemon
 
-      - name: Release
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
-        with:
-          token: ${{ secrets.TOKEN }}
-          files: |
-            FCL/build/outputs/apk/release/*.apk
-
       - name: Upload apk
-        if: startsWith(github.ref, 'refs/heads/')
         uses: actions/upload-artifact@v4
         with:
           name: app-${{matrix.arch}}
@@ -68,8 +58,14 @@ jobs:
         #  retention-days: 1
 
   debug_build:
-    if: ${{ github.repository_owner != 'FCL-Team' || github.event_name == 'pull_request' }}
-    name: Build Debug
+    name: Build for ${{matrix.arch}} debug
+    strategy:
+      matrix:
+        arch: [ "all", "arm", "arm64", "x86", "x86_64" ]
+      fail-fast: false
+    env:
+      CURSE_API_KEY: ${{ secrets.CURSE_API_KEY }}
+      OAUTH_API_KEY: ${{ secrets.OAUTH_API_KEY }}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -97,10 +93,10 @@ jobs:
       - name: Build debug apk
         run: |
           chmod +x gradlew
-          ./gradlew assemblefordebug -Darch=all --no-daemon
+          ./gradlew assemblefordebug -Darch=${{ matrix.arch }} --no-daemon
 
       - name: Upload debug apk
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-all
+          name: app-debug-${{ matrix.arch }}
           path: FCL/build/outputs/apk/fordebug/*

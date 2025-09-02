@@ -319,9 +319,7 @@ public class FCLauncher {
                     envMap.put("POJAV_RENDERER", "vulkan_zink");
                 }
             } else if (renderer.isEqual(Renderer.ID_ZINK_KOPPER)) {
-                envMap.put("DLOPEN", "libcutils.so");
-                envMap.put("DLOPEN", "libhardware.so");
-                envMap.put("DLOPEN", "libsync.so");
+                envMap.put("LIBGL_ES", "4");
                 envMap.put("DLOPEN", "libgallium_dri.so");
                 envMap.put("DLOPEN", "libEGL_mesa.so");
                 if (FCLBridge.BACKEND_IS_BOAT) {
