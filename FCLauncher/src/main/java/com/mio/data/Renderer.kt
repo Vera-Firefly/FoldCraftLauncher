@@ -19,11 +19,32 @@ data class Renderer(
         const val ID_ZINK = "18d93f17-ff53-a319-fa61-58709a77bf87"
         const val ID_FREEDRENO = "8d427e6c-9d22-2d19-db0c-3b9ac2c1543f"
         const val ID_NGGL4ES = "e7b90ed6-e518-4d4e-93dc-5c7133cd5b31"
+        const val ID_MESA_EGL_NO_SURFACE = "40bd0015-6308-5fc3-5165-329ea1ff5c5e"
     }
 
     fun getGLPath(): String {
         if (path.isEmpty()) return glName
         return "$path/$glName"
+    }
+
+    fun getBoatEnvName(): List<String>? {
+        if (path.isEmpty()) return null
+        val env : String = boatEnv.toString()
+        return if (!env.contains(":")) {
+            boatEnv
+        } else {
+            env.removeSurrounding("[", "]").split(":")
+        }
+    }
+
+    fun getPojavEnvName(): List<String>? {
+        if (path.isEmpty()) return null
+        val env : String = pojavEnv.toString()
+        return if (!env.contains(":")) {
+            pojavEnv
+        } else {
+            env.removeSurrounding("[", "]").split(":")
+        }
     }
 
     fun isEqual(id: String): Boolean {

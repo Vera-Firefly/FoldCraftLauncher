@@ -271,10 +271,10 @@ public class FCLauncher {
                 envMap.put("LIBGL_STRING", renderer.getName());
                 envMap.put("LIBGL_NAME", renderer.getGlName());
                 envMap.put("LIBEGL_NAME", eglName);
-                envList = renderer.getBoatEnv();
+                envList = renderer.getBoatEnvName();
             } else {
                 envMap.put("POJAVEXEC_EGL", eglName);
-                envList = renderer.getPojavEnv();
+                envList = renderer.getPojavEnvName();
             }
             if (envList != null) {
                 envList.forEach(env -> {
@@ -416,9 +416,9 @@ public class FCLauncher {
         if (!config.getRenderer().getPath().isEmpty()) {
             List<String> envList;
             if (FCLBridge.BACKEND_IS_BOAT) {
-                envList = config.getRenderer().getBoatEnv();
+                envList = config.getRenderer().getBoatEnvName();
             } else {
-                envList = config.getRenderer().getPojavEnv();
+                envList = config.getRenderer().getPojavEnvName();
             }
             if (envList != null) {
                 envList.forEach(env -> {
