@@ -23,11 +23,16 @@ data class Renderer(
     }
 
     fun getGLPath(): String {
-        if (path.isEmpty()) return glName
-        return "$path/$glName"
+        return if (path.isEmpty()) glName
+        else "$path/$glName"
     }
 
-    fun getBoatEnvName(): List<String>? {
+    fun getEglPath(): String {
+        return if (path.isEmpty()) eglName
+        else "$path/$eglName"
+    }
+
+    fun getBoatEnvList(): List<String>? {
         if (path.isEmpty()) return null
         val env : String = boatEnv.toString()
         return if (!env.contains(":")) {
@@ -37,10 +42,10 @@ data class Renderer(
         }
     }
 
-    fun getPojavEnvName(): List<String>? {
+    fun getPojavEnvList(): List<String>? {
         if (path.isEmpty()) return null
         val env : String = pojavEnv.toString()
-        return if (!env.contains(":")) {
+        return  if (!env.contains(":")) {
             pojavEnv
         } else {
             env.removeSurrounding("[", "]").split(":")

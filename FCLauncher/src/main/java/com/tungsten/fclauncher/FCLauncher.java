@@ -262,19 +262,16 @@ public class FCLauncher {
     private static void addRendererEnv(FCLConfig config, HashMap<String, String> envMap) {
         Renderer renderer = config.getRenderer();
         if (!renderer.getPath().isEmpty()) {
-            String eglName = renderer.getEglName();
-            if (eglName.startsWith("/")) {
-                eglName = renderer.getPath() + "/" + eglName;
-            }
+            String eglName = renderer.getEglPath();
             List<String> envList;
             if (FCLBridge.BACKEND_IS_BOAT) {
                 envMap.put("LIBGL_STRING", renderer.getName());
                 envMap.put("LIBGL_NAME", renderer.getGlName());
                 envMap.put("LIBEGL_NAME", eglName);
-                envList = renderer.getBoatEnvName();
+                envList = renderer.getBoatEnvList();
             } else {
                 envMap.put("POJAVEXEC_EGL", eglName);
-                envList = renderer.getPojavEnvName();
+                envList = renderer.getPojavEnvList();
             }
             if (envList != null) {
                 envList.forEach(env -> {
@@ -295,8 +292,8 @@ public class FCLauncher {
         }
         if (FCLBridge.BACKEND_IS_BOAT) {
             envMap.put("LIBGL_STRING", renderer.getName());
-            envMap.put("LIBGL_NAME", renderer.getGlName());
-            envMap.put("LIBEGL_NAME", renderer.getEglName());
+            envMap.put("LIBGL_NAME", renderer.getGLPath());
+            envMap.put("LIBEGL_NAME", renderer.getEglPath());
         }
         if (renderer.isEqual(Renderer.ID_GL4ES) || renderer.isEqual(Renderer.ID_VGPU)) {
             envMap.put("LIBGL_ES", "2");
@@ -416,9 +413,9 @@ public class FCLauncher {
         if (!config.getRenderer().getPath().isEmpty()) {
             List<String> envList;
             if (FCLBridge.BACKEND_IS_BOAT) {
-                envList = config.getRenderer().getBoatEnvName();
+                envList = config.getRenderer().getBoatEnvList();
             } else {
-                envList = config.getRenderer().getPojavEnvName();
+                envList = config.getRenderer().getPojavEnvList();
             }
             if (envList != null) {
                 envList.forEach(env -> {

@@ -112,7 +112,7 @@ object RendererManager {
             "Mesa 25.2.0 EGL_NO_SURFACE",
             context.getString(R.string.splash_runtime_renderer_mesa2520),
             "libglxshim.so",
-            "${FCLPath.MESA2520_PATH}/libEGL.so",
+            "libEGL.so",
             FCLPath.MESA2520_PATH,
             listOf("DLOPEN=libgallium_dri.so,libEGL.so:LIBGL_ES=2:GALLIUM_DRIVER=zink:MESA_LOADER_DRIVER_OVERRIDE=zink:MESA_GL_VERSION_OVERRIDE=4.6:MESA_GLSL_VERSION_OVERRIDE=460:GALLIUM_THREAD=0"),
             listOf("DLOPEN=libgallium_dri.so,libEGL.so:LIBGL_ES=2:POJAV_RENDERER=opengles3_desktopgl_zink_egl_no_surface:GALLIUM_DRIVER=zink:MESA_LOADER_DRIVER_OVERRIDE=zink:MESA_GL_VERSION_OVERRIDE=4.6:MESA_GLSL_VERSION_OVERRIDE=460:GALLIUM_THREAD=0"),
