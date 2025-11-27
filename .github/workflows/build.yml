@@ -58,7 +58,7 @@ jobs:
           path: FCL/build/outputs/apk/release/*
 
   debug_build:
-    name: Build for ${{matrix.arch}}
+    name: Build for debug ${{matrix.arch}}
     strategy:
       matrix:
         arch: ["all", "arm", "arm64", "x86", "x86_64"]
@@ -96,5 +96,5 @@ jobs:
       - name: Upload apk
         uses: actions/upload-artifact@v4
         with:
-          name: app-${{matrix.arch}}
+          name: app-debug-${{matrix.arch}}
           path: FCL/build/outputs/apk/fordebug/*
