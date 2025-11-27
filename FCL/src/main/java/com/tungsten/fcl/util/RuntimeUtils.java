@@ -1,6 +1,7 @@
 package com.tungsten.fcl.util;
 
 import android.content.Context;
+import android.os.Build;
 import android.system.Os;
 
 import com.tungsten.fclauncher.FCLauncher;
@@ -63,6 +64,16 @@ public class RuntimeUtils {
         uncompressTarXZ(context.getAssets().open(archPath), new File(targetDir));
         FileUtils.writeText(new File(targetDir + "/version"), version);
         patchJava(context, targetDir);
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static void installRenderer(Context context, String targetDir, String srcDir) throws IOException {
+        FileUtils.deleteDirectory(new File(targetDir));
+        new File(targetDir).mkdirs();
+        String archPath = srcDir + "/" + Build.SUPPORTED_ABIS[0];
+        copyAssets(context, archPath, targetDir);
+        String version = IOUtils.readFullyAsString(RuntimeUtils.class.getResourceAsStream("/assets/" + srcDir + "/version"));
+        FileUtils.writeText(new File(targetDir + "/version"), version);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")

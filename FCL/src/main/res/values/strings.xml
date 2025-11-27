@@ -23,6 +23,7 @@
     <string name="splash_runtime_java17" translatable="false">JRE 17</string>
     <string name="splash_runtime_java21" translatable="false">JRE 21</string>
     <string name="splash_runtime_jna" translatable="false">JNA</string>
+    <string name="splash_runtime_renderer_mesa2520" translatable="false">MESA 25.2.0 EGL NO SURFACE</string>
     <string name="splash_runtime_install">Install / Update</string>
 
     <string name="account">Account</string>

@@ -2,6 +2,7 @@ package com.tungsten.fcl.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.FileUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +13,10 @@ import com.tungsten.fcl.activity.SplashActivity
 import com.tungsten.fcl.databinding.FragmentRuntimeBinding
 import com.tungsten.fcl.util.RuntimeUtils
 import com.tungsten.fclauncher.utils.FCLPath
-import com.tungsten.fclcore.task.Schedulers
 import com.tungsten.fcllibrary.component.FCLFragment
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.IOException
 
 class RuntimeFragment : FCLFragment(), View.OnClickListener {
     private lateinit var bind: FragmentRuntimeBinding
@@ -30,6 +28,7 @@ class RuntimeFragment : FCLFragment(), View.OnClickListener {
     var java17 = false
     var java21 = false
     var jna = false
+    var mesa2520 = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +55,7 @@ class RuntimeFragment : FCLFragment(), View.OnClickListener {
         java17 = (activity as SplashActivity).java17
         java21 = (activity as SplashActivity).java21
         jna = (activity as SplashActivity).jna
+        mesa2520 = (activity as SplashActivity).mesa2520
     }
 
     private fun refreshDrawables() {
@@ -77,12 +77,13 @@ class RuntimeFragment : FCLFragment(), View.OnClickListener {
                 java17State.setBackgroundDrawable(if (java17) stateDone else stateUpdate)
                 java21State.setBackgroundDrawable(if (java21) stateDone else stateUpdate)
                 jnaState.setBackgroundDrawable(if (jna) stateDone else stateUpdate)
+                rendererMesa2520State.setBackgroundDrawable(if (mesa2520) stateDone else stateUpdate)
             }
         }
     }
 
     private val isLatest: Boolean
-        get() = lwjgl && cacio && cacio17 && java8 && java11 && java17 && java21 && jna
+        get() = lwjgl && cacio && cacio17 && java8 && java11 && java17 && java21 && jna && mesa2520
 
     private fun check() {
         if (isLatest) {
@@ -254,6 +255,26 @@ class RuntimeFragment : FCLFragment(), View.OnClickListener {
                     }
                     jnaState.visibility = View.VISIBLE
                     jnaProgress.visibility = View.GONE
+                    refreshDrawables()
+                    check()
+                }
+            }
+            if (!mesa2520) {
+                rendererMesa2520State.visibility = View.GONE
+                rendererMesa2520Progress.visibility = View.VISIBLE
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        runCatching {
+                            RuntimeUtils.installRenderer(
+                                context,
+                                FCLPath.MESA2520_PATH,
+                                "app_runtime/renderer/mesa2520"
+                            )
+                            mesa2520 = true
+                        }
+                    }
+                    rendererMesa2520State.visibility = View.VISIBLE
+                    rendererMesa2520Progress.visibility = View.GONE
                     refreshDrawables()
                     check()
                 }

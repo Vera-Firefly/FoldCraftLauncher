@@ -57,6 +57,8 @@ class SplashActivity : FCLActivity() {
     var java17: Boolean = false
     var java21: Boolean = false
     var jna: Boolean = false
+    var mesa2520: Boolean = false
+
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,7 +119,7 @@ class SplashActivity : FCLActivity() {
                 Logging.start(Paths.get(FCLPath.LOG_DIR))
                 initState()
             }.await()
-            if (lwjgl && cacio && cacio17 && java8 && java11 && java17 && java21 && jna) {
+            if (lwjgl && cacio && cacio17 && java8 && java11 && java17 && java21 && jna && mesa2520) {
                 enterLauncher()
             } else {
                 start()
@@ -226,6 +228,7 @@ class SplashActivity : FCLActivity() {
             java17 = RuntimeUtils.isLatest(FCLPath.JAVA_17_PATH, "/assets/app_runtime/java/jre17")
             java21 = RuntimeUtils.isLatest(FCLPath.JAVA_21_PATH, "/assets/app_runtime/java/jre21")
             jna = RuntimeUtils.isLatest(FCLPath.JNA_PATH, "/assets/app_runtime/jna")
+            mesa2520 = RuntimeUtils.isLatest(FCLPath.MESA2520_PATH, "/assets/app_runtime/renderer/mesa2520")
             if (!File(FCLPath.JAVA_PATH, "resolv.conf").exists()) {
                 if (LocaleUtils.getSystemLocale().displayName != Locale.CHINA.displayName) {
                     FileUtils.writeText(

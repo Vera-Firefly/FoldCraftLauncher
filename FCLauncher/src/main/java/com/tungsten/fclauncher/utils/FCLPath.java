@@ -6,7 +6,6 @@ import android.os.Environment;
 import java.io.File;
 
 public class FCLPath {
-
     public static Context CONTEXT;
 
     public static String NATIVE_LIB_DIR;
@@ -22,6 +21,7 @@ public class FCLPath {
     public static String JAVA_21_PATH;
     public static String JAVA_PATH;
     public static String JNA_PATH;
+    public static String MESA2520_PATH;
     public static String LWJGL_DIR;
     public static String CACIOCAVALLO_8_DIR;
     public static String CACIOCAVALLO_17_DIR;
@@ -56,6 +56,7 @@ public class FCLPath {
         JAVA_17_PATH = RUNTIME_DIR + "/java/jre17";
         JAVA_21_PATH = RUNTIME_DIR + "/java/jre21";
         JNA_PATH = RUNTIME_DIR + "/jna";
+        MESA2520_PATH = RUNTIME_DIR + "/renderer/mesa2520";
         LWJGL_DIR = RUNTIME_DIR + "/lwjgl";
         CACIOCAVALLO_8_DIR = RUNTIME_DIR + "/caciocavallo";
         CACIOCAVALLO_17_DIR = RUNTIME_DIR + "/caciocavallo17";
@@ -84,6 +85,7 @@ public class FCLPath {
         init(JAVA_11_PATH);
         init(JAVA_17_PATH);
         init(JAVA_21_PATH);
+        init(MESA2520_PATH);
         init(LWJGL_DIR);
         init(CACIOCAVALLO_8_DIR);
         init(CACIOCAVALLO_17_DIR);
